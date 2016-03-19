@@ -15,13 +15,17 @@ public class DefaultRequestFactory implements RequestFactory {
 
     private static Logger logger = LoggerFactory.getLogger(DefaultRequestFactory.class);
 
-    public static AsyncHttpRequest newAsyncHttpRequest(String reqUrl) {
+    public static AsyncHttpRequest newAsyncHttpRequest(String reqUrl, HttpMethod httpMethod) {
         AsyncHttpRequest asyncHttpRequest = null;
         try {
             URI uri = new URI(reqUrl);
-            HttpRequest httpRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.GET, reqUrl);
+            HttpRequest httpRequest = new DefaultHttpRequest(HttpVersion.HTTP_1_1, httpMethod, reqUrl);
             httpRequest.headers().set(HttpHeaders.Names.HOST, uri.getHost());
             httpRequest.headers().set(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
+
+            if (httpMethod.equals(HttpMethod.POST)) {
+                httpRequest.headers().set(HttpHeaders.Names.TRANSFER_ENCODING, HttpHeaders.Values.CHUNKED);
+            }
 
             asyncHttpRequest = new DefaultAsyncHttpRequest(httpRequest, uri);
 

@@ -33,6 +33,7 @@ public class NettyHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        ResultFuture resultFuture = ChannelManager.attr(ctx.channel());
         super.channelInactive(ctx);
     }
 

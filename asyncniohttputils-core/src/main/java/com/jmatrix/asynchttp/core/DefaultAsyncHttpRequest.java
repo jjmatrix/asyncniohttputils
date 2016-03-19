@@ -14,6 +14,8 @@ public class DefaultAsyncHttpRequest implements AsyncHttpRequest {
 
     private URI uri;
 
+    private byte []requestData;
+
     public DefaultAsyncHttpRequest() {
 
     }
@@ -41,5 +43,13 @@ public class DefaultAsyncHttpRequest implements AsyncHttpRequest {
     @Override
     public void wrap(HttpRequest httpRequest) {
         this.wrapRequest = httpRequest;
+    }
+
+    public byte[] getRequestData() {
+        return requestData;
+    }
+
+    public void setRequestData(byte[] requestData) {
+        this.requestData = requestData;
     }
 }
